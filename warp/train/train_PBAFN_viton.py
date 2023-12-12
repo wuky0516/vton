@@ -107,7 +107,6 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         warped_prod_edge = x_edge_all[4]
 
         epsilon = 0.001
-        loss_smooth = sum([TVLoss(x) for x in delta_list])
         loss_all = 0
 
         for num in range(5):
@@ -127,7 +126,7 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
             loss_all = loss_all + (num + 1) * loss_l1 + (num + 1) * 0.2 * loss_vgg + (num + 1) * 2 * loss_edge + (
                     num + 1) * 6 * loss_second_smooth
 
-        loss_all = 0.01 * loss_smooth + loss_all
+
 
         if local_rank == 0:
             writer.add_scalar('loss_all', loss_all, step)
